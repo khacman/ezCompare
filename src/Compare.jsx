@@ -1,12 +1,13 @@
 import React, {Component} from "react";
+import ReactDOM from "react-dom";
 import {Grid, Row, Col, FormGroup, ControlLabel, FormControl, Button} from "react-bootstrap";
 
 class Compare extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            product1Url: "",
-            product2Url: ""
+            product1Url: "http://www.lazada.sg/samsung-galaxy-s8-64gb-midnight-black-18155589.html",
+            product2Url: "https://www.lazada.sg/apple-iphone-8-256gb-2gb-ram-grey-60291398.html?spm=a2o42.campaign.list.90.518be942CQwT7t"
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -36,7 +37,12 @@ class Compare extends Component {
         fetch("http://localhost:5000/getPages", reqOptions).then((response) => {
             return response.json();
         }).then((data) => {
-            console.log(data);
+            // console.log(data);
+            // TODO: isolate mechanism
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(data.documents[0], "text/html");
+            const component = ReactDOM.findDOMNode(doc);
+            console.log(component);
         });
     }
 

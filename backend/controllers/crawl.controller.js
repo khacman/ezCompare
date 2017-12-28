@@ -1,11 +1,11 @@
 "use strict";
+const crawlService = require("../services/crawlService");
 
 function getPageDom(req, res, next) {
     console.log(req.body);
-    let result = {
-        status: "success"
-    };
-    res.json(result);
+    crawlService.crawl(req.body.urls).then(result => {
+        res.json(result);
+    });
 }
 
 module.exports = {
