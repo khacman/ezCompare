@@ -1,0 +1,2 @@
+# ezCompare
+Products compare feature
