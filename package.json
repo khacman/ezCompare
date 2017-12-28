@@ -1,0 +1,30 @@
+{
+  "name": "ezCompare",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": "https://khacman.github.io/ezCompare",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "bootstrap": "^3.3.7",
+    "cors": "^2.8.4",
+    "debug": "^3.1.0",
+    "express": "^4.16.2",
+    "gh-pages": "^1.1.0",
+    "morgan": "^1.9.0",
+    "react": "^16.0.0",
+    "react-bootstrap": "^0.31.5",
+    "react-dom": "^16.0.0",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.0.14",
+    "request": "^2.83.0",
+    "request-promise-native": "^1.0.5"
+  },
+  "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
