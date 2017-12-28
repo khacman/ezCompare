@@ -1,2 +1,0 @@
-# ezCompare
-Products compare feature
