@@ -12,7 +12,7 @@ class ComparisonTable extends Component {
     render() {
         const products = this.state.products;
         let productList = products.map(product => {
-            return <p key={product.productId}>{product.productName}</p>
+            return <p key={product.id}>{product.name}</p>
         });
         return (
             <Row>

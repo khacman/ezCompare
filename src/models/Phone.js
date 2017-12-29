@@ -27,13 +27,14 @@ class PhoneDomAdapter extends Phone {
      * attribute attribute-warranty_text
      * attribute attribute-warranty_type
      * <h1 class="product-info-name">
-     *
+     * Price data: dom.scripts[29]
+     * Product data: dom.scripts[27]
      * @param dom
      */
     constructor(dom) {
         super();
         const data = new Map();
-        data.set("productName", dom.getElementsByClassName("product-info-name"));
+        const productData = Product.getProductData(dom);
         data.set("cameraBack", dom.getElementsByClassName("attribute-camera_back"));
         data.set("cameraFront", dom.getElementsByClassName("attribute-camera_front"));
         data.set("condition", dom.getElementsByClassName("attribute-condition"));
@@ -58,9 +59,13 @@ class PhoneDomAdapter extends Phone {
         data.forEach((element, key) => {
             this[key] = (element.length > 0) ? element[0].innerText.trim(): null;
         });
-        this.productId = dom.getElementById("configSku").getAttribute("value");
-        this.selectedSku = dom.getElementById("selectedSku").getAttribute("value");
-        this.productImg = dom.getElementsByClassName("product-image-container")[0].getElementsByTagName("img")[0].getAttribute("src");
+        this.name = productData["pdt_name"];
+        this.price = productData["pdt_price"];
+        this.category = productData["pdt_category"];
+        this.currency = productData["pdt_currency"];
+        this.photo = productData["pdt_photo"];
+        this.id = productData["pdt_sku"];
+        this.simpleSku = productData["pdt_simplesku"];
         // console.log(this);
     }
 }
