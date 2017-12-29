@@ -1,14 +1,10 @@
 import React, {Component} from "react";
 import {Row, Col, Table} from "react-bootstrap";
 class ComparisonTable extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            products : props.products,
-            indexedData: ComparisonTable.indexData(props.products)
-        };
-        // console.log(props.products);
-    }
+    // constructor(props) {
+    //     super(props);
+    //     // console.log(props.products);
+    // }
 
     /**
      * Data structure transform service
@@ -47,17 +43,18 @@ class ComparisonTable extends Component {
     }
 
     render() {
-        const th = this.state.products.map(p => { // Add productColumns
+        const indexedData = ComparisonTable.indexData(this.props.products);
+        const th = this.props.products.map(p => { // Add productColumns
             return (
                 <th key={p.id}>
-                    <img src={p.photo} alt={`Photo of ${p.name}`}/><br/>
+                    <img src={p.photo} alt={p.name}/><br/>
                     {p.name}
                 </th>
             );
         });
 
         const mainInfo = ["cameraBack", "cameraFront", "condition", "model", "operatingSystem", "networkConnections", "ramMemory", "processorTpe", "warranty", "price"];
-        const indexes = this.state.indexedData
+        const indexes = indexedData
             .filter(i => mainInfo.includes(i[0])) // Filter attributes
             .map((r, i) => { // Add table rows for each product's attributes
 

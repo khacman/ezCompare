@@ -1,3 +1,4 @@
+import "font-awesome/css/font-awesome.min.css";
 import React, {Component} from "react";
 import {Route} from "react-router-dom";
 import {Jumbotron} from "react-bootstrap";

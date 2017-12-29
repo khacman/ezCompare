@@ -9,7 +9,8 @@ class Compare extends Component {
         this.state = {
             product1Url: "http://www.lazada.sg/samsung-galaxy-s8-64gb-midnight-black-18155589.html",
             product2Url: "https://www.lazada.sg/apple-iphone-8-256gb-2gb-ram-grey-60291398.html?spm=a2o42.campaign.list.90.518be942CQwT7t",
-            errorMessage: ""
+            errorMessage: "",
+            isLoading: false
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -24,10 +25,13 @@ class Compare extends Component {
         });
     }
 
-    submitHandler(e) {
+    async submitHandler(e) {
         e.preventDefault();
+        await this.setState({
+            isLoading : true
+        });
         try {
-            productService.getProducts([this.state.product1Url, this.state.product2Url]).then(products => {
+            await productService.getProducts([this.state.product1Url, this.state.product2Url]).then(products => {
                 this.setState({
                     products : products
                 });
@@ -35,6 +39,10 @@ class Compare extends Component {
         } catch (err) {
             this.setState({
                 errorMessage: err.message
+            });
+        } finally {
+            this.setState({
+                isLoading : false
             });
         }
     }
@@ -73,9 +81,19 @@ class Compare extends Component {
                                         onChange={this.handleInputChange}
                                     />
                                 </FormGroup>
-                                <Button bsStyle="primary" type="submit">
-                                    Compare
-                                </Button>
+                                {this.state.isLoading ?
+                                    (
+                                        <Button bsStyle="info">
+                                            <i className="fa fa-refresh fa-spin fa-fw"></i> Comparing
+                                        </Button>
+                                    ) :
+                                    (
+                                        <Button bsStyle="primary" type="submit">
+                                            <span>Compare</span>
+                                        </Button>
+                                    )
+                                }
+
                             </form>
                         </Col>
                     </Row>
