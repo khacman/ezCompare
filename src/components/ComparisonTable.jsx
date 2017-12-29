@@ -10,34 +10,70 @@ class ComparisonTable extends Component {
         // console.log(props.products);
     }
 
-    static indexData(productList) {
+    /**
+     * Data structure transform service
+     * @param [
+     *      {name: "t2.micro",  memory: "1GB",     vCPU: "1 CPU"},      // Product 1
+     *      {name: "c4.large",  memory: "3.75GB",  vCPU: "2 CPUs"},     // Product 2
+     *      ...                                                         // Product n
+     * ]
+     * @returns [
+     *      ["name",    "t2.micro", "c4.large", ...]
+     *      ["memory",  "1GB",      "3.75GB",   ...]
+     *      ["vCPU",    "1 CPU",    "2 CPUs",   ...]
+     * ]
+     */
+    static indexData(productList, attributes) {
+
         let result = [];
-        for (const prop in productList[0]) {
-            const row = [prop];
-            productList.forEach(product => {
-                row.push(product[prop]);
+        if (!attributes) {
+            for (const prop in productList[0]) {
+                const row = [prop];
+                productList.forEach(product => {
+                    row.push(product[prop]);
+                });
+                result.push(row);
+            }
+        } else {
+            attributes.forEach(attribute => {
+                const row = [attribute];
+                productList.forEach(product => {
+                    row.push(product[attribute]);
+                });
             });
-            result.push(row);
         }
+
         return result;
     }
 
     render() {
-        const th = this.state.products.map(p => {
-            return (<th key={p.id}>{p.name}</th>);
+        const th = this.state.products.map(p => { // Add productColumns
+            return (
+                <th key={p.id}>
+                    <img src={p.photo} alt={`Photo of ${p.name}`}/><br/>
+                    {p.name}
+                </th>
+            );
         });
-        const indexes = this.state.indexedData.map((r, i) => {
-            const values = r.map((v, j) => {
+
+        const mainInfo = ["cameraBack", "cameraFront", "condition", "model", "operatingSystem", "networkConnections", "ramMemory", "processorTpe", "warranty", "price"];
+        const indexes = this.state.indexedData
+            .filter(i => mainInfo.includes(i[0])) // Filter attributes
+            .map((r, i) => { // Add table rows for each product's attributes
+
+            const values = r.map((v, j) => { // Add columns for each row
                 return (
                     <td key={`${i}.${j}`}>{v}</td>
                 );
             });
+
             return (
                 <tr key={i}>
                     {values}
                 </tr>
             );
         });
+
         return (
             <Row>
                 <Col xs={12}>
