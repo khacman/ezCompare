@@ -1,13 +1,15 @@
 import React, {Component} from "react";
-import ReactDOM from "react-dom";
+import productService from "../services/productService";
 import {Grid, Row, Col, FormGroup, ControlLabel, FormControl, Button} from "react-bootstrap";
+import ComparisonTable from "./ComparisonTable";
 
 class Compare extends Component {
     constructor(props) {
         super(props);
         this.state = {
             product1Url: "http://www.lazada.sg/samsung-galaxy-s8-64gb-midnight-black-18155589.html",
-            product2Url: "https://www.lazada.sg/apple-iphone-8-256gb-2gb-ram-grey-60291398.html?spm=a2o42.campaign.list.90.518be942CQwT7t"
+            product2Url: "https://www.lazada.sg/apple-iphone-8-256gb-2gb-ram-grey-60291398.html?spm=a2o42.campaign.list.90.518be942CQwT7t",
+            errorMessage: ""
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -20,30 +22,21 @@ class Compare extends Component {
         this.setState({
             [name]: value
         });
-        // console.log(this.state);
     }
 
     submitHandler(e) {
         e.preventDefault();
-        console.log(this);
-        const body = {
-            urls: [this.state.product1Url, this.state.product2Url]
-        };
-        const reqOptions = {
-            method: "POST",
-            headers: new Headers({"Content-Type": "application/json"}),
-            body: JSON.stringify(body)
-        };
-        fetch("http://localhost:5000/getPages", reqOptions).then((response) => {
-            return response.json();
-        }).then((data) => {
-            // console.log(data);
-            // TODO: isolate mechanism
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(data.documents[0], "text/html");
-            const component = ReactDOM.findDOMNode(doc);
-            console.log(component);
-        });
+        try {
+            productService.getProducts([this.state.product1Url, this.state.product2Url]).then(products => {
+                this.setState({
+                    products : products
+                });
+            });
+        } catch (err) {
+            this.setState({
+                errorMessage: err.message
+            });
+        }
     }
 
     render() {
@@ -51,7 +44,12 @@ class Compare extends Component {
             <main>
                 <Grid>
                     <Row>
-                        <Col xs={12} md={6} >
+                        <Col xs={12} md={6}>
+                            {this.state.errorMessage !== "" &&
+                            <div className="alert alert-danger" onClick={() => {
+                                this.setState({errorMessage: ""});
+                            }}>{this.state.errorMessage}</div>
+                            }
                             <form onSubmit={this.submitHandler.bind(this)}>
                                 <FormGroup controlId="product1">
                                     <ControlLabel>Product 1</ControlLabel>
@@ -81,6 +79,9 @@ class Compare extends Component {
                             </form>
                         </Col>
                     </Row>
+                    {this.state.products &&
+                        <ComparisonTable products={this.state.products} />
+                    }
                 </Grid>
             </main>
         );

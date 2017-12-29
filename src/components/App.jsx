@@ -3,7 +3,6 @@ import {Route} from "react-router-dom";
 import {Jumbotron} from "react-bootstrap";
 // import logo from "./logo.svg";
 import "./App.css";
-import "./Compare";
 import About from "./About";
 import Compare from "./Compare";
 

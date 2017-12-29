@@ -1,16 +1,6 @@
-"use strict";
 class GetPagesMessage {
-    constructor() {
-        this.urls = [];
-    }
-
-    static validateUrl(url) {
-        if (!url) {
-            throw new Error("URL is mandatory");
-        }
-        // TODO: Add regex to validator
-
-        return true;
+    constructor(urls) {
+        this.urls = urls;
     }
 
     add(url) {
@@ -27,8 +17,27 @@ class GetPagesMessage {
     }
 }
 function messageFactory() {
-    function createGetPageMessage() {
-        return new GetPagesMessage();
+    function validateUrl(url) {
+        if (!url) {
+            throw new Error("URL is mandatory");
+        } else {
+            // TODO: Add regex to validator
+            const urlRegex = /^(?:(http|https):)?(?:\/{0,2})?(?:www.)?(lazada.sg\/)/i;
+            const validation = urlRegex.exec(url);
+            if (!validation) {
+                throw new Error(`Invalid URL: ${url}`);
+            }
+
+            return true;
+        }
+    }
+
+    function createGetPageMessage(urls) {
+        for (let url of urls) {
+            validateUrl(url);
+        }
+
+        return new GetPagesMessage(urls);
     }
 
     return {
