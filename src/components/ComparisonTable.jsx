@@ -1,5 +1,7 @@
+import "./comparisonTable.css";
 import React, {Component} from "react";
-import {Row, Col, Table} from "react-bootstrap";
+import {Row, Col, Table, Button} from "react-bootstrap";
+
 class ComparisonTable extends Component {
     // constructor(props) {
     //     super(props);
@@ -47,44 +49,59 @@ class ComparisonTable extends Component {
         const th = this.props.products.map(p => { // Add productColumns
             return (
                 <th key={p.id}>
-                    <img src={p.photo} alt={p.name}/><br/>
+                    <img src={p.photo} alt={p.name}/>
+                    <br/>
                     {p.name}
                 </th>
             );
         });
 
-        const mainInfo = ["cameraBack", "cameraFront", "condition", "model", "operatingSystem", "networkConnections", "ramMemory", "processorTpe", "warranty", "price"];
+        const mainInfo = ["cameraBack", "cameraFront", "condition", "model", "operatingSystem", "networkConnections", "ramMemory", "storageCapacityNew", "processorTpe", "warranty", "price"];
         const indexes = indexedData
             .filter(i => mainInfo.includes(i[0])) // Filter attributes
             .map((r, i) => { // Add table rows for each product's attributes
 
-            const values = r.map((v, j) => { // Add columns for each row
+                const values = r.map((v, j) => { // Add columns for each row
+                    return (
+                        <td key={`${i}.${j}`}>{v}</td>
+                    );
+                });
+
                 return (
-                    <td key={`${i}.${j}`}>{v}</td>
+                    <tr key={i}>
+                        {values}
+                    </tr>
                 );
             });
-
-            return (
-                <tr key={i}>
-                    {values}
-                </tr>
-            );
-        });
 
         return (
             <Row>
                 <Col xs={12}>
-                    <Table responsive>
-                        <thead>
-                            <tr>
-                                <th>Specs</th>
-                                {th}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {indexes}
-                        </tbody>
-                    </Table>
+                    <Row>
+                        <h2>Comparison</h2>
+                    </Row>
+                    <Row>
+                        <Table id="mainTable" striped responsive>
+                            <thead>
+                                <tr>
+                                    <th>Specs</th>
+                                    {th}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {indexes}
+                                <tr>
+                                    <td>Purchase</td>
+                                    <td>
+                                        <Button bsStyle="danger" bsSize="large" block>Buy now</Button>
+                                    </td>
+                                    <td>
+                                        <Button bsStyle="danger" bsSize="large" block>Buy now</Button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </Table>
+                    </Row>
                 </Col>
             </Row>
         );

@@ -55,3 +55,4 @@ yarn-error.log*
 
 .idea
 /mock
+*.css

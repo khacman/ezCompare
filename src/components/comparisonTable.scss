@@ -1,0 +1,18 @@
+#mainTable {
+  thead {
+    tr {
+      th {
+        img {
+          margin-bottom: 15px;
+        }
+      }
+    }
+  }
+  tbody {
+    tr {
+      td:first-child {
+        font-weight: bold;
+      }
+    }
+  }
+}
