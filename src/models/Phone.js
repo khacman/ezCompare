@@ -57,7 +57,7 @@ class PhoneDomAdapter extends Phone {
         data.set("warrantyType", dom.getElementsByClassName("attribute-warranty_type"));
 
         data.forEach((element, key) => {
-            this[key] = (element.length > 0) ? element[0].innerText.trim(): null;
+            this[key] = (element.length > 0) ? element[0].innerText.trim(): "N/A";
         });
         this.name = productData["pdt_name"];
         this.price = productData["pdt_price"];
