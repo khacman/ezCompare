@@ -2,7 +2,6 @@
   "name": "ezCompare",
   "version": "0.1.0",
   "private": true,
-
   "dependencies": {
     "body-parser": "^1.18.2",
     "bootstrap": "^3.3.7",
@@ -31,6 +30,10 @@
     "server": "node backend/server",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
+    "jest": "jest",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "jest": "^22.0.4"
   }
 }
