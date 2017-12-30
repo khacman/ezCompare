@@ -2,7 +2,7 @@
   "name": "ezCompare",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://khacman.github.io/ezCompare",
+
   "dependencies": {
     "body-parser": "^1.18.2",
     "bootstrap": "^3.3.7",

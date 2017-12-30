@@ -1,5 +1,6 @@
 import messageFactory from "./messageFactory";
 import {PhoneDomAdapter} from "../models/Phone";
+import {config} from "../config";
 
 function productService() {
 
@@ -13,7 +14,8 @@ function productService() {
             headers: new Headers({"Content-Type": "application/json"}),
             body: payload.toString()
         };
-        return fetch("http://localhost:5000/getPages", reqOptions).then((response) => {
+
+        return fetch(config.apiUrl, reqOptions).then((response) => {
             return response.json();
         }).then((data) => {
 
@@ -23,10 +25,6 @@ function productService() {
             docs.forEach(doc => {
                 productList.push(new PhoneDomAdapter(doc));
             });
-            // const productMap = new Map();
-            // productList.forEach(p => {
-            //     productMap.set(p.productId, p);
-            // });
             return productList;
         });
     }
