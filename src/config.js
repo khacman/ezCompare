@@ -4,5 +4,5 @@ const servers = {
 };
 
 export const config = {
-    apiUrl: servers.aws
+    apiUrl: servers.local
 };
