@@ -17,5 +17,5 @@ EzCompare is using AWS's Serverless technology:
 - :rainbow: API Gateway
 - :factory: CloudFormation
 
-Check it out at [https://d1wwuef0ypnlb.cloudfront.net](https://d1wwuef0ypnlb.cloudfront.net)
+Check it out at [https://dy1ta6k67c059.cloudfront.net](https://dy1ta6k67c059.cloudfront.net)
 
