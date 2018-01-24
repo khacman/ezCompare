@@ -55,10 +55,10 @@ class ComparisonTable extends Component {
                 </th>
             );
         });
-
+        const attributeUnary = fn => row => fn(row[0]);
         const mainInfo = ["cameraBack", "cameraFront", "condition", "model", "operatingSystem", "networkConnections", "ramMemory", "storageCapacityNew", "processorTpe", "warranty", "price"];
         const indexes = indexedData
-            .filter(i => mainInfo.includes(i[0])) // Filter attributes
+            .filter(attributeUnary(mainInfo.includes.bind(mainInfo))) // Filter attributes
             .map((r, i) => { // Add table rows for each product's attributes
 
                 const values = r.map((v, j) => { // Add columns for each row
